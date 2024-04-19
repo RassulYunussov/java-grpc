@@ -10,7 +10,6 @@ import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 
 public class GrpcClient {
-    Sinks.One<HelloResponse> sink = Sinks.one();
     final ManagedChannel channel;
     final HelloServiceGrpc.HelloServiceStub stub;
     public GrpcClient() {
@@ -21,6 +20,7 @@ public class GrpcClient {
     }
 
     public Mono<HelloResponse> get() {
+        Sinks.One<HelloResponse> sink = Sinks.one();
         final var observer = new CallStreamObserver<HelloResponse>() {
             @Override
             public boolean isReady() {
